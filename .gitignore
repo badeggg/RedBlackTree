@@ -1,0 +1,15 @@
+# node_modules
+/node_modules
+
+# vim
+*.swp
+*.swo
+
+# nyc
+/.nyc_output
+
+#.mockingLocation
+.mockingLocation
+
+# tap coverage report
+/coverage

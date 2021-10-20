@@ -1,9 +1,11 @@
 /**
  * Created by @zhaoxuxu at @2019-4-3
- * Last modified by @zhaoxuxu at @2019-4-8
+ * Last modified by @zhaoxuxu at @2021-10-20
  * Feel free to move this tool to a more reasonable directory place for common use.
  * Algorithm reference book "Introduction To Algorithms" chapter 13.
  */
+import _ from 'lodash';
+
 const RED = 0;
 const BLACK = 1;
 
@@ -40,7 +42,7 @@ class RedBlackTree {
         if (typeof content !== 'object') {
             throw new Error('Invalid content to findEqual in RedBlackTree. Content type should be object.');
         }
-        const z = new Node(content);
+        const z = new Node(_.cloneDeep(content));
         let y = NIL;
         let x = this.root;
         while (x !== NIL) {
@@ -89,6 +91,34 @@ class RedBlackTree {
         return ret;
     }
 
+    indexInSortedArray(content) {
+        const equalContent = this.findEqual(content);
+        if (!equalContent) {
+            return -1;
+        }
+
+        const sortedArray = this.sortedArray();
+        if (!sortedArray.length) {
+            return -1;
+        }
+        let index = -1;
+        let left = 0;
+        let right = sortedArray.length - 1;
+        let found = false;
+        while (left <= right) {
+            index = Math.floor((left + right) / 2);
+            if (this.isEqual(sortedArray[index], content)) {
+                found = true;
+                break;
+            } else if (this.isBiggerThan(sortedArray[index], content)) {
+                right = index - 1;
+            } else {
+                left = index + 1;
+            }
+        }
+        return found ? index : -1;
+    }
+
     has(content) {
         return this.contents.has(content);
     }
@@ -96,6 +126,11 @@ class RedBlackTree {
     successor(content) {
         if (this.contents.has(content)) {
             const sucNode = this._successor(content.RBNode);
+            return sucNode === NIL ? null : sucNode.content;
+        }
+        const equalContent = this.findEqual(content);
+        if (equalContent) {
+            const sucNode = this._successor(equalContent.RBNode);
             return sucNode === NIL ? null : sucNode.content;
         }
         const z = new Node(content);
@@ -115,6 +150,11 @@ class RedBlackTree {
     predecessor(content) {
         if (this.contents.has(content)) {
             const preNode = this._predecessor(content.RBNode);
+            return preNode === NIL ? null : preNode.content;
+        }
+        const equalContent = this.findEqual(content);
+        if (equalContent) {
+            const preNode = this._predecessor(equalContent.RBNode);
             return preNode === NIL ? null : preNode.content;
         }
         const z = new Node(content);
