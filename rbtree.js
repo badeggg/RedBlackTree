@@ -1,10 +1,13 @@
 /**
+ * Algorithm reference book "Introduction To Algorithms(Third Edition)" chapter 13.
+ * Core code logic is an implementation of chapter 13 of this book ---- in case you
+ * want to check the code correctness.
+ * wikipedia reference: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+ *
  * Created by @zhaoxuxu at @2019-4-3
  * Last modified by @zhaoxuxu at @2021-10-20
- * Feel free to move this tool to a more reasonable directory place for common use.
- * Algorithm reference book "Introduction To Algorithms" chapter 13.
  */
-import _ from 'lodash';
+const cloneDeep = require('lodash/cloneDeep');
 
 const RED = 0;
 const BLACK = 1;
@@ -42,7 +45,7 @@ class RedBlackTree {
         if (typeof content !== 'object') {
             throw new Error('Invalid content to findEqual in RedBlackTree. Content type should be object.');
         }
-        const z = new Node(_.cloneDeep(content));
+        const z = new Node(cloneDeep(content));
         let y = NIL;
         let x = this.root;
         while (x !== NIL) {
