@@ -4,7 +4,8 @@
   "description": "A red black tree implementation in js.",
   "main": "rbtree.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "snap": "tap --snapshot",
+    "test": "tap",
     "lint": "eslint -- test/ ./rbtree.js .eslintrc.js"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "eslint": "^8.0.1"
+    "eslint": "^8.0.1",
+    "tap": "^15.0.10"
   }
 }
