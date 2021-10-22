@@ -1,28 +1,29 @@
 {
-  "name": "rbtree",
+  "name": "RebBlackTree",
   "version": "1.0.0",
   "description": "A red black tree implementation in js.",
-  "main": "rbtree.js",
+  "main": "RebBlackTree.js",
   "scripts": {
     "snap": "tap --snapshot",
     "test": "tap",
-    "lint": "eslint -- test/ ./rbtree.js .eslintrc.js"
+    "lint": "eslint -- test/ ./RebBlackTree.js .eslintrc.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/badeggg/rbtree.git"
+    "url": "git+https://github.com/badeggg/RebBlackTree.git"
   },
   "keywords": [
-    "red-black-tree",
+    "red black tree",
+    "red black tree in js",
     "rbtree",
     "rbtree in js"
   ],
   "author": "badeggg",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/badeggg/rbtree/issues"
+    "url": "https://github.com/badeggg/RebBlackTree/issues"
   },
-  "homepage": "https://github.com/badeggg/rbtree#readme",
+  "homepage": "https://github.com/badeggg/RebBlackTree#readme",
   "dependencies": {
     "lodash": "^4.17.21"
   },
