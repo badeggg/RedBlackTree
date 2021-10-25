@@ -1,3 +1,8 @@
 doc
 test suit
 eslint
+use Map instead of Set to contain contents
+api to add:
+  + count ( read only
+  + clear ( although it's not really useful, it should exist for completion
+  + forEach ( Map
