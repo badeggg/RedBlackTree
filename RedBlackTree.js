@@ -14,9 +14,7 @@ const BLACK = 1;
 
 class Node {
     constructor(contentArg) {
-        const content = contentArg;
-        content.RBNode = this;
-        this.content = content;
+        this.content = contentArg;
         this.parent = null;
         this.left = null;
         this.right = null;
@@ -32,19 +30,46 @@ class RedBlackTree {
         if (typeof isBiggerThan !== 'function'
             || typeof isEqual !== 'function'
         ) {
-            throw new Error('Invalid compare function for RedBlackTree, [isBiggerThan, isEqual] are needed.');
+            throw new Error('Invalid compare function for RedBlackTree constructor, '
+                + '[isBiggerThan, isEqual] are needed.');
         }
         this.isBiggerThan = isBiggerThan;
         this.isEqual = isEqual;
         this.root = NIL;
-        this.size = 0;
-        this.contents = new Set();
+        this._count = 0;
+        this.contents = new Map(); // map content with tree node
+        this._minimumCached = null;
+        this._maxmumCached = null;
+    }
+
+    get count() {
+        return this._count;
+    }
+
+    get minimumCached() {
+        return this._minimumCached;
+    }
+
+    get maxmumCached() {
+        return this._maxmumCached;
+    }
+
+    forEach(cb) {
+        if (typeof cb !== 'function') {
+            throw new Error('Invalid callback function for RedBlackTree forEach.');
+        }
+        this.contents.forEach((node, content) => cb(content));
+    }
+
+    clear() {
+        this.root = NIL;
+        this._count = 0;
+        this.contents.clear();
+        this._minimumCached = null;
+        this._maxmumCached = null;
     }
 
     findEqual(content) {
-        if (typeof content !== 'object') {
-            throw new Error('Invalid content to findEqual in RedBlackTree. Content type should be object.');
-        }
         const z = new Node(cloneDeep(content));
         let y = NIL;
         let x = this.root;
@@ -62,16 +87,22 @@ class RedBlackTree {
     }
 
     insert(content) {
-        if (typeof content !== 'object') {
-            throw new Error('Invalid content to insert in RedBlackTree. Content type should be object.');
+        if (this.contents.has(content) || this.findEqual(content)) {
+            throw new Error(`Refuse to insert content: ${JSON.stringify(content)}, `
+                + 'RedBlackTree already has it or has an euqal.');
         }
-        if (this.contents.has(content)) {
-            return;
-        }
-        this.contents.add(content);
         const z = new Node(content);
+        this.contents.set(content, z);
         this._insert(z);
-        this.size += 1;
+        this._count += 1;
+
+        // maintain _minimumCached and _maxmumCached
+        if (!this._minimumCached || this.isBiggerThan(this._minimumCached, content)) {
+            this._minimumCached = content;
+        }
+        if (!this._maxmumCached || this.isBiggerThan(content, this._maxmumCached)) {
+            this._maxmumCached = content;
+        }
     }
 
     delete(contentArg) {
@@ -79,11 +110,18 @@ class RedBlackTree {
         if (!this.contents.has(content)) {
             return;
         }
+        const z = this.contents.get(content);
         this.contents.delete(content);
-        const z = content.RBNode;
         this._delete(z);
-        this.size -= 1;
-        content.RBNode = undefined;
+        this._count -= 1;
+
+        // maintain _minimumCached and _maxmumCached
+        if (content === this._minimumCached) {
+            this._minimumCached = this._minimum(this.root).content || null;
+        }
+        if (content === this._maxmumCached) {
+            this._maxmumCached = this._maxmum(this.root).content || null;
+        }
     }
 
     sortedArray() {
@@ -128,12 +166,12 @@ class RedBlackTree {
 
     successor(content) {
         if (this.contents.has(content)) {
-            const sucNode = this._successor(content.RBNode);
+            const sucNode = this._successor(this.contents.get(content));
             return sucNode === NIL ? null : sucNode.content;
         }
         const equalContent = this.findEqual(content);
         if (equalContent) {
-            const sucNode = this._successor(equalContent.RBNode);
+            const sucNode = this._successor(this.contents.get(equalContent));
             return sucNode === NIL ? null : sucNode.content;
         }
         const z = new Node(content);
@@ -152,12 +190,12 @@ class RedBlackTree {
 
     predecessor(content) {
         if (this.contents.has(content)) {
-            const preNode = this._predecessor(content.RBNode);
+            const preNode = this._predecessor(this.contents.get(content));
             return preNode === NIL ? null : preNode.content;
         }
         const equalContent = this.findEqual(content);
         if (equalContent) {
-            const preNode = this._predecessor(equalContent.RBNode);
+            const preNode = this._predecessor(this.contents.get(equalContent));
             return preNode === NIL ? null : preNode.content;
         }
         const z = new Node(content);
