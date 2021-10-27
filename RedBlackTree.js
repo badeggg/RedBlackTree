@@ -36,8 +36,9 @@ class RedBlackTree {
         this.isBiggerThan = isBiggerThan;
         this.isEqual = isEqual;
         this.root = NIL;
+        this.NIL = NIL;
         this._count = 0;
-        this.contents = new Map(); // map content with tree node
+        this._contents = new Map(); // map content with tree node
         this._minimumCached = null;
         this._maxmumCached = null;
     }
@@ -58,13 +59,13 @@ class RedBlackTree {
         if (typeof cb !== 'function') {
             throw new Error('Invalid callback function for RedBlackTree forEach.');
         }
-        this.contents.forEach((node, content) => cb(content));
+        this._contents.forEach((node, content) => cb(content));
     }
 
     clear() {
         this.root = NIL;
         this._count = 0;
-        this.contents.clear();
+        this._contents.clear();
         this._minimumCached = null;
         this._maxmumCached = null;
     }
@@ -87,12 +88,12 @@ class RedBlackTree {
     }
 
     insert(content) {
-        if (this.contents.has(content) || this.findEqual(content)) {
+        if (this._contents.has(content) || this.findEqual(content)) {
             throw new Error(`Refuse to insert content: ${JSON.stringify(content)}, `
                 + 'RedBlackTree already has it or has an euqal.');
         }
         const z = new Node(content);
-        this.contents.set(content, z);
+        this._contents.set(content, z);
         this._insert(z);
         this._count += 1;
 
@@ -107,11 +108,11 @@ class RedBlackTree {
 
     delete(contentArg) {
         const content = contentArg;
-        if (!this.contents.has(content)) {
+        if (!this._contents.has(content)) {
             return;
         }
-        const z = this.contents.get(content);
-        this.contents.delete(content);
+        const z = this._contents.get(content);
+        this._contents.delete(content);
         this._delete(z);
         this._count -= 1;
 
@@ -161,17 +162,17 @@ class RedBlackTree {
     }
 
     has(content) {
-        return this.contents.has(content);
+        return this._contents.has(content);
     }
 
     successor(content) {
-        if (this.contents.has(content)) {
-            const sucNode = this._successor(this.contents.get(content));
+        if (this._contents.has(content)) {
+            const sucNode = this._successor(this._contents.get(content));
             return sucNode === NIL ? null : sucNode.content;
         }
         const equalContent = this.findEqual(content);
         if (equalContent) {
-            const sucNode = this._successor(this.contents.get(equalContent));
+            const sucNode = this._successor(this._contents.get(equalContent));
             return sucNode === NIL ? null : sucNode.content;
         }
         const z = new Node(content);
@@ -189,13 +190,13 @@ class RedBlackTree {
     }
 
     predecessor(content) {
-        if (this.contents.has(content)) {
-            const preNode = this._predecessor(this.contents.get(content));
+        if (this._contents.has(content)) {
+            const preNode = this._predecessor(this._contents.get(content));
             return preNode === NIL ? null : preNode.content;
         }
         const equalContent = this.findEqual(content);
         if (equalContent) {
-            const preNode = this._predecessor(this.contents.get(equalContent));
+            const preNode = this._predecessor(this._contents.get(equalContent));
             return preNode === NIL ? null : preNode.content;
         }
         const z = new Node(content);
