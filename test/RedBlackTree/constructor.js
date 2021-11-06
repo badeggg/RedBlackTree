@@ -20,8 +20,8 @@ tap.test('constructor and indirect checking dependent object', async tap => {
 
     tap.equal(tree._count, 0);
     tap.ok(tree._contents instanceof Map, 'should use Map to contain contents');
-    tap.equal(tree._minimumCached, null);
-    tap.equal(tree._maxmumCached, null);
+    tap.equal(tree._minCached, null);
+    tap.equal(tree._maxCached, null);
 
     tap.throws(
         () => new RedBlackTree(),

@@ -39,20 +39,20 @@ class RedBlackTree {
         this.NIL = NIL;
         this._count = 0;
         this._contents = new Map(); // map content with tree node
-        this._minimumCached = null;
-        this._maxmumCached = null;
+        this._minCached = null;
+        this._maxCached = null;
     }
 
     get count() {
         return this._count;
     }
 
-    get minimumCached() {
-        return this._minimumCached;
+    get min() {
+        return this._minCached;
     }
 
-    get maxmumCached() {
-        return this._maxmumCached;
+    get max() {
+        return this._maxCached;
     }
 
     forEach(cb) {
@@ -66,8 +66,8 @@ class RedBlackTree {
         this.root = NIL;
         this._count = 0;
         this._contents.clear();
-        this._minimumCached = null;
-        this._maxmumCached = null;
+        this._minCached = null;
+        this._maxCached = null;
     }
 
     findEqual(content) {
@@ -97,12 +97,12 @@ class RedBlackTree {
         this._insert(z);
         this._count += 1;
 
-        // maintain _minimumCached and _maxmumCached
-        if (!this._minimumCached || this.isBiggerThan(this._minimumCached, content)) {
-            this._minimumCached = content;
+        // maintain _minCached and _maxCached
+        if (!this._minCached || this.isBiggerThan(this._minCached, content)) {
+            this._minCached = content;
         }
-        if (!this._maxmumCached || this.isBiggerThan(content, this._maxmumCached)) {
-            this._maxmumCached = content;
+        if (!this._maxCached || this.isBiggerThan(content, this._maxCached)) {
+            this._maxCached = content;
         }
     }
 
@@ -116,12 +116,12 @@ class RedBlackTree {
         this._delete(z);
         this._count -= 1;
 
-        // maintain _minimumCached and _maxmumCached
-        if (content === this._minimumCached) {
-            this._minimumCached = this._minimum(this.root).content || null;
+        // maintain _minCached and _maxCached
+        if (content === this._minCached) {
+            this._minCached = this._min(this.root).content || null;
         }
-        if (content === this._maxmumCached) {
-            this._maxmumCached = this._maxmum(this.root).content || null;
+        if (content === this._maxCached) {
+            this._maxCached = this._max(this.root).content || null;
         }
     }
 
@@ -216,7 +216,7 @@ class RedBlackTree {
     _successor(xArg) {
         let x = xArg;
         if (x.right !== NIL) {
-            return this._minimum(x.right);
+            return this._min(x.right);
         }
         let y = x.parent;
         while (y !== NIL && x === y.right) {
@@ -229,7 +229,7 @@ class RedBlackTree {
     _predecessor(xArg) {
         let x = xArg;
         if (x.left !== NIL) {
-            return this._maxmum(x.left);
+            return this._max(x.left);
         }
         let y = x.parent;
         while (y !== NIL && x === y.left) {
@@ -350,18 +350,18 @@ class RedBlackTree {
         this.root.color = BLACK;
     }
 
-    _minimum(tree) {
+    _min(tree) {
         if (tree === NIL) {
             return tree;
         }
-        let mini = tree;
-        while (mini.left !== NIL) {
-            mini = mini.left;
+        let min = tree;
+        while (min.left !== NIL) {
+            min = min.left;
         }
-        return mini;
+        return min;
     }
 
-    _maxmum(tree) {
+    _max(tree) {
         if (tree === NIL) {
             return tree;
         }
@@ -396,7 +396,7 @@ class RedBlackTree {
             x = z.left;
             this._transplant(z, z.left);
         } else {
-            y = this._minimum(z.right);
+            y = this._min(z.right);
             yOriginalColor = y.color;
             x = y.right;
             if (y.parent === z) {
