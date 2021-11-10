@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/badeggg/RedBlackTree#readme",
   "dependencies": {
-    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^8.0.1",

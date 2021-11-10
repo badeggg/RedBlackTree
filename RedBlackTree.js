@@ -7,7 +7,6 @@
  * Created by @zhaoxuxu at @2019-4-3
  * Last modified by @zhaoxuxu at @2021-10-20
  */
-const cloneDeep = require('lodash/cloneDeep');
 
 const RED = 0;
 const BLACK = 1;
@@ -75,7 +74,7 @@ class RedBlackTree {
         if (this.has(content)) {
             return content;
         }
-        const z = new Node(cloneDeep(content));
+        const z = new Node(content);
         let y = NIL;
         let x = this.root;
         while (x !== NIL) {
