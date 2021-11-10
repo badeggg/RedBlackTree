@@ -71,6 +71,9 @@ class RedBlackTree {
     }
 
     findEqual(content) {
+        if (this.has(content)) {
+            return content;
+        }
         const z = new Node(cloneDeep(content));
         let y = NIL;
         let x = this.root;
