@@ -41,6 +41,7 @@ class RedBlackTree {
         this._contents = new Map(); // map content with tree node
         this._minCached = null;
         this._maxCached = null;
+        this.firstContentType = null;
     }
 
     get count() {
@@ -94,6 +95,15 @@ class RedBlackTree {
         if (this._contents.has(content) || this.findEqual(content)) {
             throw new Error(`Refuse to insert content: ${JSON.stringify(content)}, `
                 + 'RedBlackTree already has it or has an euqal.');
+        }
+        const contentType = Object.prototype.toString.call(content);
+        if (!this.firstContentType) {
+            this.firstContentType = contentType;
+        } else if (this.firstContentType !== contentType) {
+            throw new Error(
+                `Inserting type ${contentType} content: ${JSON.stringify(content)}, `
+                + `which is different from the first inserted content type ${this.firstContentType}.`
+            );
         }
         const z = new Node(content);
         this._contents.set(content, z);
