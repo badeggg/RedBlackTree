@@ -110,10 +110,10 @@ class RedBlackTree {
         this._count += 1;
 
         // maintain _minCached and _maxCached
-        if (!this._minCached || this.isBiggerThan(this._minCached, content)) {
+        if (this._minCached === null || this.isBiggerThan(this._minCached, content)) {
             this._minCached = content;
         }
-        if (!this._maxCached || this.isBiggerThan(content, this._maxCached)) {
+        if (this._maxCached === null || this.isBiggerThan(content, this._maxCached)) {
             this._maxCached = content;
         }
     }
@@ -147,7 +147,7 @@ class RedBlackTree {
 
     indexInSortedArray(content) {
         const equalContent = this.findEqual(content);
-        if (!equalContent) {
+        if (!equalContent && equalContent !== 0) {
             return -1;
         }
 

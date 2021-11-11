@@ -22,7 +22,7 @@ tap.test('basic', async tap => {
     tap.equal(tree.min, 0);
 
     tree.insert(8);
-    tap.equal(tree.min, 8);
+    tap.equal(tree.min, 0);
 
     tree.clear();
     tap.equal(tree.min, null);
