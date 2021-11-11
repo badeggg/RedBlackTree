@@ -4,7 +4,6 @@
   "description": "A red black tree implementation in js.",
   "main": "RedBlackTree.js",
   "scripts": {
-    "snap": "tap --snapshot",
     "test": "tap",
     "lint": "eslint -- test/ ./RedBlackTree.js .eslintrc.js"
   },
