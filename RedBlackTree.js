@@ -91,6 +91,9 @@ class RedBlackTree {
     }
 
     insert(content) {
+        if (!content && content !== 0) {
+            throw new Error('Refuse to insert empty content.');
+        }
         if (this._contents.has(content) || this.findEqual(content)) {
             throw new Error(`Refuse to insert content: ${JSON.stringify(content)}, `
                 + 'RedBlackTree already has it or has an euqal.');

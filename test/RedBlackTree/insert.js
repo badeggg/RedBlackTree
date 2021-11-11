@@ -18,6 +18,14 @@ tap.test('insert basic', async tap => {
 
 tap.test('insert throw', async tap => {
     let tree = new RedBlackTree((v1, v2) => v1 > v2, (v1, v2) => v1 === v2);
+    tree.insert(0);
+    tap.throws(
+        () => tree.insert(null),
+        {
+            message: 'Refuse to insert empty content.'
+        },
+        'should complain empty content inserting'
+    );
     tree.insert(1);
     tap.throws(
         () => tree.insert(1),
