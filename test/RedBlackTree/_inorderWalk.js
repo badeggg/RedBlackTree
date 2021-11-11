@@ -107,7 +107,7 @@ tap.test('_inorderWalk basic', async tap => {
     tree.insert(100);
 
     const arr = [];
-    tree._inorderWalk(tree.root, (node) => arr.push(node.content))
+    tree._inorderWalk(tree.root, (node) => arr.push(node.content));
     tap.equal(
         arr.join(','),
         '0,1,2,3,4,5,6,7,8,9,' +

@@ -5,7 +5,7 @@
  * wikipedia reference: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
  *
  * Created by @zhaoxuxu at @2019-4-3
- * Last modified by @zhaoxuxu at @2021-10-20
+ * Last modified by @zhaoxuxu at @2021-11-11
  */
 
 const RED = 0;
@@ -133,10 +133,12 @@ class RedBlackTree {
 
         // maintain _minCached and _maxCached
         if (content === this._minCached) {
-            this._minCached = this._min(this.root).content || null;
+            const minNode = this._min(this.root);
+            this._minCached = minNode !== this.NIL ? minNode.content : null;
         }
         if (content === this._maxCached) {
-            this._maxCached = this._max(this.root).content || null;
+            const maxNode = this._max(this.root);
+            this._maxCached = maxNode !== this.NIL ? maxNode.content : null;
         }
     }
 
@@ -158,11 +160,9 @@ class RedBlackTree {
         let index = -1;
         let left = 0;
         let right = sortedArray.length - 1;
-        let found = false;
         while (left <= right) {
             index = Math.floor((left + right) / 2);
             if (this.isEqual(sortedArray[index], content)) {
-                found = true;
                 break;
             } else if (this.isBiggerThan(sortedArray[index], content)) {
                 right = index - 1;
@@ -170,7 +170,7 @@ class RedBlackTree {
                 left = index + 1;
             }
         }
-        return found ? index : -1;
+        return index;
     }
 
     has(content) {
