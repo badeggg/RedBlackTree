@@ -4,6 +4,7 @@
   "description": "A red black tree implementation in js.",
   "main": "RedBlackTree.js",
   "scripts": {
+    "prepublishOnly": "npm run test && npm run lint",
     "test": "tap",
     "lint": "eslint -- test/ ./RedBlackTree.js .eslintrc.js"
   },
