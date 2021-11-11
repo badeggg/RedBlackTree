@@ -155,9 +155,6 @@ class RedBlackTree {
         }
 
         const sortedArray = this.sortedArray();
-        if (!sortedArray.length) {
-            return -1;
-        }
         let index = -1;
         let left = 0;
         let right = sortedArray.length - 1;
