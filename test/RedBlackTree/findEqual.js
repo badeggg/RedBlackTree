@@ -22,16 +22,23 @@ tap.test('findEqual case: non-primitive content', async tap => {
         (v1, v2) => v1.start > v2.start,
         (v1, v2) => v1.start === v2.start,
     );
-    tree.insert({ start: 1 });
-    tree.insert({ start: 2 });
-    tree.insert({ start: 3 });
-    tree.insert({ start: 4 });
-    tree.insert({ start: 5 });
+    
+    const o1 = { start: 1 };
+    const o2 = { start: 2 };
+    const o3 = { start: 3 };
+    const o4 = { start: 4 };
+    const o5 = { start: 5 };
 
-    tap.match(tree.findEqual({ start: 1 }), { start: 1 });
-    tap.match(tree.findEqual({ start: 2 }), { start: 2 });
-    tap.match(tree.findEqual({ start: 3 }), { start: 3 });
-    tap.match(tree.findEqual({ start: 4 }), { start: 4 });
-    tap.match(tree.findEqual({ start: 5 }), { start: 5 });
+    tree.insert(o1);
+    tree.insert(o2);
+    tree.insert(o3);
+    tree.insert(o4);
+    tree.insert(o5);
+
+    tap.equal(tree.findEqual({ start: 1 }), o1);
+    tap.equal(tree.findEqual({ start: 2 }), o2);
+    tap.equal(tree.findEqual({ start: 3 }), o3);
+    tap.equal(tree.findEqual({ start: 4 }), o4);
+    tap.equal(tree.findEqual({ start: 5 }), o5);
     tap.equal(tree.findEqual({ start: 6 }), null);
 });
