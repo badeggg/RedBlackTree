@@ -1,5 +1,5 @@
 {
-  "name": "RedBlackTree",
+  "name": "@badeggg/red-black-tree",
   "version": "1.0.0",
   "description": "A red black tree implementation in js.",
   "main": "RedBlackTree.js",
