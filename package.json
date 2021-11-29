@@ -8,6 +8,9 @@
     "test": "tap",
     "lint": "eslint -- test/ ./RedBlackTree.js .eslintrc.js"
   },
+  "files": [
+      "RedBlackTree.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/badeggg/RedBlackTree.git"
