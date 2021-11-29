@@ -55,19 +55,16 @@ class RedBlackTree {
         return this._maxCached;
     }
 
-    forEach(cb) {
-        if (typeof cb !== 'function') {
-            throw new Error('Invalid callback function for RedBlackTree forEach.');
-        }
-        this._contents.forEach((node, content) => cb(content));
-    }
-
     clear() {
         this.root = NIL;
         this._count = 0;
         this._contents.clear();
         this._minCached = null;
         this._maxCached = null;
+    }
+
+    has(content) {
+        return this._contents.has(content);
     }
 
     findEqual(content) {
@@ -142,6 +139,13 @@ class RedBlackTree {
         }
     }
 
+    forEach(cb) {
+        if (typeof cb !== 'function') {
+            throw new Error('Invalid callback function for RedBlackTree forEach.');
+        }
+        this._contents.forEach((node, content) => cb(content));
+    }
+
     sortedArray() {
         const ret = [];
         this._inorderWalk(this.root, (node) => {
@@ -171,10 +175,6 @@ class RedBlackTree {
             }
         }
         return index;
-    }
-
-    has(content) {
-        return this._contents.has(content);
     }
 
     successor(content) {
