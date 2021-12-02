@@ -46,7 +46,11 @@ console.log(tree.successor(20)); // print 23
 `new RedBlackTree(isBiggerThan, isEqual);`
 Two function parameters, isBiggerThan and isEqual
 must be supplied. RedBlackTree use these two functions to compare contents in the tree. This
-is flexible for tree usage ---- you could store object type content for example in a tree.
+is flexible for tree usage ---- you could store non-primitive type content, object type content
+for example in a tree.
+**Notice that if the content type is non-primitive and you want to change content properties
+in place ---- by 'in place', we mean not deleteing and inserting back, you must guarantee the
+content change does not impact comparison.**
 
 Example(s):
 ```
@@ -67,6 +71,43 @@ tree.insert({start: 1, end: 3});
 tree.insert({start: 2, end: 4});
 tree.insert({start: 3, end: 5});
 console.log(tree.predecessor({start: 1.5})); // print {start: 1, end: 3}
+```
+```
+// store non-primitive content, object for example
+const isBiggerThan = (v1, v2) => v1.start > v2.start;
+const isEqual = (v1, v2) => v1.start === v2.start;
+const tree = new RedBlackTree(isBiggerThan, isEqual);
+const obj1 = {start: 1, end: 3};
+const obj2 = {start: 2, end: 4};
+const obj3 = {start: 3, end: 5};
+tree.insert(obj1);
+tree.insert(obj2);
+tree.insert(obj3);
+
+// print [ { start: 1, end: 3 }, { start: 2, end: 4 }, { start: 3, end: 5 } ]
+console.log(tree.sortedArray());
+
+/**
+ * obj2 property change does not impact comparison, obj2 is still bigger than obj1 and smaller
+ * then obj3
+ */
+obj2.start = 2.8;
+console.log(tree.has(obj2)); // print true
+
+// print [ { start: 1, end: 3 }, { start: 2.8, end: 4 }, { start: 3, end: 5 } ]
+console.log(tree.sortedArray());
+
+/**
+ * obj2 property change do impact comparison, delete obj2 from tree change property and insert
+ * back.
+ */
+tree.delete(obj2);
+console.log(tree.has(obj2)); // print false
+obj2.start = 8;
+tree.insert(obj2);
+console.log(tree.has(obj2)); // print true
+// print [ { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 8, end: 4 } ]
+console.log(tree.sortedArray());
 ```
 
 ### count
