@@ -1,6 +1,6 @@
 # Red Black Tree
 [![Version npm](https://img.shields.io/npm/v/@badeggg/red-black-tree.svg?logo=npm)](https://www.npmjs.com/package/@badeggg/red-black-tree)
-[![Build Status](https://github.com/badeggg/RedBlackTree/actions/workflows/ci-test.yml/badge.svg)](https://github.com/badeggg/RedBlackTree/actions)
+[![CI test](https://github.com/badeggg/RedBlackTree/actions/workflows/ci-test.yml/badge.svg)](https://github.com/badeggg/RedBlackTree/actions)
 
 Red black tree in javascript ---- **carefully implemented, elaborately designed api and
 well tested**.
