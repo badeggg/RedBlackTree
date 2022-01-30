@@ -37,7 +37,7 @@ An example of storing number contents in rbtree is beneficial to explain the bas
 although storing number contents may be not very useful.
 
 ```
-// store number content
+// store number contents
 const RedBlackTree = require('@badeggg/red-black-tree');
 const isBiggerThan = (v1, v2) => v1 > v2;
 const isEqual = (v1, v2) => v1 === v2;
@@ -58,7 +58,7 @@ you should check [constructor](#constructorisbiggerthan-isequal) for the notice 
 non-primitive type contents.
 
 ```
-// store object content
+// store object contents
 const RedBlackTree = require('@badeggg/red-black-tree');
 const isBiggerThan = (v1, v2) => v1.start > v2.start;
 const isEqual = (v1, v2) => v1.start === v2.start;
@@ -82,7 +82,7 @@ content change does not impact comparison.**
 
 Example(s):
 ```
-// store number content
+// store number contents
 const isBiggerThan = (v1, v2) => v1 > v2;
 const isEqual = (v1, v2) => v1 === v2;
 const tree = new RedBlackTree(isBiggerThan, isEqual);
@@ -91,7 +91,7 @@ tree.insert(2);
 tree.insert(3);
 ```
 ```
-// store object content
+// store object contents
 const isBiggerThan = (v1, v2) => v1.start > v2.start;
 const isEqual = (v1, v2) => v1.start === v2.start;
 const tree = new RedBlackTree(isBiggerThan, isEqual);
@@ -101,7 +101,7 @@ tree.insert({start: 3, end: 5});
 console.log(tree.predecessor({start: 1.5})); // print {start: 1, end: 3}
 ```
 ```
-// store non-primitive content, object for example
+// store non-primitive contents, object for example
 const isBiggerThan = (v1, v2) => v1.start > v2.start;
 const isEqual = (v1, v2) => v1.start === v2.start;
 const tree = new RedBlackTree(isBiggerThan, isEqual);
@@ -116,8 +116,8 @@ tree.insert(obj3);
 console.log(tree.sortedArray());
 
 /**
- * obj2 property change does not impact comparison, obj2 is still bigger than obj1 and smaller
- * then obj3
+ * obj2 property's changing does not impact comparison, obj2 is still bigger than obj1 and
+ * smaller then obj3
  */
 obj2.start = 2.8;
 console.log(tree.has(obj2)); // print true
@@ -126,8 +126,8 @@ console.log(tree.has(obj2)); // print true
 console.log(tree.sortedArray());
 
 /**
- * obj2 property change do impact comparison, delete obj2 from tree change property and insert
- * back.
+ * obj2 property's changing do impact comparison, delete obj2 from tree, change property and
+ * insert back.
  */
 tree.delete(obj2);
 console.log(tree.has(obj2)); // print false
@@ -236,7 +236,7 @@ console.log(tree.findEqual({start: 4})); // print null
 ### insert(content)
 Insert content to the tree. Notice that:
 - it's forbidden to insert empty content
-- it's forbidden to insert duplicate content(`===` or `isEqual`)
+- it's forbidden to insert duplicate contents(`===` or `isEqual`)
 - it's forbidden to insert different type content
 
 Example(s):
