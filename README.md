@@ -9,7 +9,8 @@ well tested**.
 ## Table of Contents
 - [Red Black Tree](#Red-Black-Tree)
 - [Installation](#Installation)
-- [Usage example](#Usage-example)
+- [Usage example, store number contents](#usage-example-store-number-contents)
+- [Usage example, store object contents](#usage-example-store-object-contents)
 - [Apis](#Apis)
   + [constructor(isBiggerThan, isEqual)](#constructorisbiggerthan-isequal)
   + [count](#count)
@@ -30,8 +31,13 @@ well tested**.
 $ npm install @badeggg/red-black-tree
 ```
 
-## Usage example
+## Usage example, store number contents
+
+An example of storing number contents in rbtree is beneficial to explain the basic concepts,
+although storing number contents may be not very useful.
+
 ```
+// store number content
 const RedBlackTree = require('@badeggg/red-black-tree');
 const isBiggerThan = (v1, v2) => v1 > v2;
 const isEqual = (v1, v2) => v1 === v2;
@@ -43,6 +49,24 @@ tree.insert(123);
 console.log(tree.has(3)); // print true
 console.log(tree.has(4)); // print false
 console.log(tree.successor(20)); // print 23
+```
+
+## Usage example, store object contents
+
+Storing object contents in rbtree is the most general case. Object is non-primitive type and
+you should check [constructor](#constructorisbiggerthan-isequal) for the notice of storing
+non-primitive type contents.
+
+```
+// store object content
+const RedBlackTree = require('@badeggg/red-black-tree');
+const isBiggerThan = (v1, v2) => v1.start > v2.start;
+const isEqual = (v1, v2) => v1.start === v2.start;
+const tree = new RedBlackTree(isBiggerThan, isEqual);
+tree.insert({start: 1, end: 3});
+tree.insert({start: 2, end: 4});
+tree.insert({start: 3, end: 5});
+console.log(tree.predecessor({start: 1.5})); // print {start: 1, end: 3}
 ```
 
 ## Apis
